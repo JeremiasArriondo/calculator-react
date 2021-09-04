@@ -1,13 +1,11 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html, body {
+    background-color: rgb(243, 243, 243);
+    color: #78c2c5;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size:1.3rem;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/*
+    Opte por darle por defecto estos valores tanto al color y tamaño de la fuente de la app en general,
+    asi como la fuente y el color del fondo.
+*/
