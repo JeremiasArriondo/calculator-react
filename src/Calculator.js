@@ -3,14 +3,17 @@ import styled from 'styled-components';
 import Button from './Button';
 import Display from './Display';
 import Keypad from './Keypad';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faSave, faClock, faTrashAlt} from '@fortawesome/free-regular-svg-icons';
 
-const Calculator = ({ value ="" }) => {
+const Calculator = ({ value = ''}) => {
     /*
     El valor por defecto de la propiedad de la calculadora lo deje en un string vacio, debido al uso que le voy
     a dar en las siguientes funciones, opte usar el hook useState para al menos mostrar en el display 
     los valores de los botones y tambien el poder limpiar el display 
     */
     const [display, setDisplay] = useState( value );
+    /*
     /*
     Aca implemente la limpieza de la pantalla con una arrow function, donde seteo el valor
     al valor por defecto de la props de la calculadora
@@ -24,7 +27,36 @@ const Calculator = ({ value ="" }) => {
         let symbol = (e.target.id);
         setDisplay(display + symbol);
     }
+    //Funcion para borrar el valor guardado en localStorage
+    const deleteMemorize = () => localStorage.clear();
 
+    //Esta funcion simplemente setea la data en localStorage
+    const setLocalStorage= () => localStorage.setItem('display', display);
+
+    /* Esta funcion devuelve el valor guardado en localStorage, antes comprueba que si es null, no retorne nada, pero si
+    hay un valor, que lo retorne */
+    const getLocalStorage = () => {
+        if (localStorage.getItem('display') == null){
+            return;
+        } else {
+            setDisplay(localStorage.getItem('display'));
+        }
+    }
+    //Esta funcion la utilizo para poder resolver las operaciones y si, hay algun error, poder manejarlo con el catch
+    const result = () => {
+        try {
+
+            setDisplay(eval(display));
+
+        } catch (error) {
+
+            setDisplay('Operacion inválida')
+            
+            setTimeout(() => {
+                setDisplay('')
+            }, 500);
+        }
+    }
     return (
     <>
         {/*Utilizo la version corta de fragments <> y </> para poder devolver varios elementos*/}
@@ -39,26 +71,31 @@ const Calculator = ({ value ="" }) => {
             <Display>
                 {display}
             </Display>
+        
             <Keypad>
-                <Button onClick= { clearAll }> C </Button>
-                <Button onClick= {writeDisplay} id="/"> / </Button>
-                <Button onClick= {writeDisplay} id="*"> x </Button>
-                <Button onClick= {writeDisplay} id="-"> - </Button>
-                <Button onClick= {writeDisplay} id="7"> 7 </Button>
-                <Button onClick= {writeDisplay} id="8"> 8 </Button>
-                <Button onClick= {writeDisplay} id="9"> 9 </Button>
-                <Button className='add' onClick= {writeDisplay} id="+"> + </Button>
-                <Button onClick= {writeDisplay} id="4"> 4 </Button>
-                <Button onClick= {writeDisplay} id="5"> 5 </Button>
-                <Button onClick= {writeDisplay} id="6"> 6 </Button>
-                <Button onClick= {writeDisplay} id="1"> 1 </Button>
-                <Button onClick= {writeDisplay} id="2"> 2 </Button>
-                <Button onClick= {writeDisplay} id="3"> 3 </Button>
-                <Button className='equals'> = </Button>
-                <Button onClick= {writeDisplay} id="0"> 0 </Button>
-                <Button onClick= {writeDisplay} id="."> . </Button>
+                <Button onClick= { getLocalStorage } > <FontAwesomeIcon icon={ faClock } /> </Button>
+                <Button onClick= { setLocalStorage } className='save' value='false'> <FontAwesomeIcon icon={ faSave } /> </Button>  
+                <Button onClick= { clearAll }> <FontAwesomeIcon icon={ faTrashAlt } /> </Button>
+                <Button onClick= { deleteMemorize }> M- </Button>
+                <Button onClick= { writeDisplay } id="/"> / </Button>
+                <Button onClick= { writeDisplay } id="*"> x </Button>
+                <Button onClick= { writeDisplay } id="-"> - </Button>
+                <Button onClick= { writeDisplay } id="7"> 7 </Button>
+                <Button onClick= { writeDisplay } id="8"> 8 </Button>
+                <Button onClick= { writeDisplay } id="9"> 9 </Button>
+                <Button className='add' onClick= { writeDisplay } id="+"> + </Button>
+                <Button onClick= { writeDisplay } id="4"> 4 </Button>
+                <Button onClick= { writeDisplay } id="5"> 5 </Button>
+                <Button onClick= { writeDisplay } id="6"> 6 </Button>
+                <Button onClick= { writeDisplay } id="1"> 1 </Button>
+                <Button onClick= { writeDisplay } id="2"> 2 </Button>
+                <Button onClick= { writeDisplay } id="3"> 3 </Button>
+                <Button onClick= { result } className='equals'> = </Button>
+                <Button onClick= { writeDisplay } id="0"> 0 </Button>
+                <Button onClick= { writeDisplay } id="."> . </Button>
                 <Button> {null} </Button>
             </Keypad>
+            
         </DivCalc>
     </>
     );

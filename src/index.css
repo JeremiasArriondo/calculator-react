@@ -9,3 +9,6 @@ html, body {
     Opte por darle por defecto estos valores tanto al color y tamaño de la fuente de la app en general,
     asi como la fuente y el color del fondo.
 */
+button {
+    font-size: 2rem;
+}

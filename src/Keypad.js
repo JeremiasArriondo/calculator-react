@@ -15,7 +15,9 @@ const Keypad = styled.div`
     .equals {
         grid-row: span 2;
     }
-    
+    .save {
+        grid-column: span 2;
+    }
 `;
 
 export default Keypad;
