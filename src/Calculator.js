@@ -5,6 +5,8 @@ import Display from './Display';
 import Keypad from './Keypad';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSave, faClock, faTrashAlt} from '@fortawesome/free-regular-svg-icons';
+/* eslint no-eval: 0 */
+//Lo de la linea 8 es para evitar que se muestre en consola el alerta del uso de Eval
 
 const Calculator = ({ value = ''}) => {
     /*
@@ -20,8 +22,8 @@ const Calculator = ({ value = ''}) => {
     */
     const clearAll = () => setDisplay(value);
     /*
-    Investigando sobre como obtener el valor de un boton, pude dar con una manera que utilizando target.id, el cual implemente
-    para que se pueda visualizar algo en pantalla, en este caso los simbolos tanto de los numeros como los de las operaciones
+    Aca utilizo target.id
+    para que se pueda visualizar la data en pantalla, en este caso los simbolos tanto de los numeros como los de las operaciones
     */
     const writeDisplay = (e) => {
         let symbol = (e.target.id);
@@ -31,7 +33,9 @@ const Calculator = ({ value = ''}) => {
     const deleteMemorize = () => localStorage.clear();
 
     //Esta funcion simplemente setea la data en localStorage
-    const setLocalStorage= () => localStorage.setItem('display', display);
+    const setLocalStorage= () => {
+        localStorage.setItem('display', display);
+    }
 
     /* Esta funcion devuelve el valor guardado en localStorage, antes comprueba que si es null, no retorne nada, pero si
     hay un valor, que lo retorne */
@@ -42,7 +46,7 @@ const Calculator = ({ value = ''}) => {
             setDisplay(localStorage.getItem('display'));
         }
     }
-    //Esta funcion la utilizo para poder resolver las operaciones y si, hay algun error, poder manejarlo con el catch
+    //Esta funcion la utilizo para poder resolver las operaciones y si, existe algun error, poder manejarlo con el catch
     const result = () => {
         try {
 
@@ -57,6 +61,7 @@ const Calculator = ({ value = ''}) => {
             }, 500);
         }
     }
+
     return (
     <>
         {/*Utilizo la version corta de fragments <> y </> para poder devolver varios elementos*/}
@@ -67,6 +72,7 @@ const Calculator = ({ value = ''}) => {
             Elegí esta manera porque permite que, aunque a pesar de la cantidad de componentes dentro de Keypad, el esquema se
             pueda ver entendible y ordenado.
         */}
+
         <DivCalc>
             <Display>
                 {display}
@@ -74,7 +80,7 @@ const Calculator = ({ value = ''}) => {
         
             <Keypad>
                 <Button onClick= { getLocalStorage } > <FontAwesomeIcon icon={ faClock } /> </Button>
-                <Button onClick= { setLocalStorage } className='save' value='false'> <FontAwesomeIcon icon={ faSave } /> </Button>  
+                <Button onClick= { setLocalStorage } className='save'> <FontAwesomeIcon icon={ faSave } /> </Button>  
                 <Button onClick= { clearAll }> <FontAwesomeIcon icon={ faTrashAlt } /> </Button>
                 <Button onClick= { deleteMemorize }> M- </Button>
                 <Button onClick= { writeDisplay } id="/"> / </Button>

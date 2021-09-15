@@ -18,6 +18,9 @@ const Keypad = styled.div`
     .save {
         grid-column: span 2;
     }
+    .save:active {
+        color: #2b293d;
+    }
 `;
 
 export default Keypad;
